@@ -1,0 +1,6 @@
+SRC += muse.c
+MOUSEKEY_ENABLE = yes
+EXTRAKEY_ENABLE = yes
+
+# AUTO_SHIFT_ENABLE = yes
+BOOTMAGIC_ENABLE = yes
