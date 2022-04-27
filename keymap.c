@@ -1,7 +1,6 @@
 #include QMK_KEYBOARD_H
 #include "muse.h"
 
-
 enum planck_layers {
   _COLEMAK,
   _QWERTY,
@@ -97,17 +96,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_Layer2] = LAYOUT_planck_grid(
-    _______, _______, _______, _______, _______, _______, _______, KC_AMPR, KC_ASTR, KC_LPRN, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, KC_DLR,  KC_PERC, KC_CIRC, KC_TILD, KC_UNDS,
-    _______, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______, _______, KC_EXLM, KC_AT,   KC_HASH, KC_GRV,  TO(_Layer3),
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    _______, _______, _______, _______, _______, _______, _______, BACK,    TABLEFT, TABRIGHT, FORWARD, _______,
+    _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, DLEFT,   DRIGHT,
+    _______, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______, LB,      WB,      WF,      LF,       _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______
 ),
 
 [_Layer3] = LAYOUT_planck_grid(
-    _______, _______, KC_MS_D, KC_MS_U, KC_MS_BTN1, _______, _______, BACK,    TABLEFT, TABRIGHT, FORWARD, _______,
-    _______, _______, SS1,     SS2,     HYPR(KC_F), _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, DLEFT,   DRIGHT,
-    _______, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT,    _______, LB,      WB,      WF,      LF,       _______, _______,
-    _______, _______, _______, _______, _______,    _______, _______, TO(0),   _______, _______,  _______, _______
+    _______, _______, KC_MS_D, KC_MS_U, KC_MS_BTN1, _______, _______, KC_AMPR, KC_ASTR, KC_LPRN, _______, _______,
+    _______, _______, SS1,     SS2,     HYPR(KC_F), _______, _______, KC_DLR,  KC_PERC, KC_CIRC, KC_TILD, KC_UNDS,
+    _______, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT,    _______, _______, KC_EXLM, KC_AT,   KC_HASH, KC_GRV,  _______,
+    _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______, _______, _______
 ),
 
 [_Layer4] = LAYOUT_planck_grid(
@@ -151,7 +150,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case L2_ENT:
             return TAPPING_TERM - 106;
         case L3_ESC:
-            return TAPPING_TERM - 95;
+            return TAPPING_TERM - 100;
         default:
             return TAPPING_TERM;
     }
