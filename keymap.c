@@ -2,17 +2,20 @@
 #include "muse.h"
 
 enum planck_layers {
-  _COLEMAK,
-  _QWERTY,
-  _Layer1,
-  _Layer2,
-  _Layer3,
-  _Layer4
+    _COLEMAK,
+    _QWERTY,
+    _DVORAK,
+    _Layer1,
+    _Layer2,
+    _Layer3,
+    _Layer4
 };
 
 enum planck_keycodes {
-  COLEMAK = SAFE_RANGE,
-  QWERTY,
+    COLEMAK = SAFE_RANGE,
+    QWERTY,
+    DVORAK,
+    PSSWD,
 };
 
 #define L2_ENT LT(_Layer2, KC_ENT)
@@ -70,79 +73,98 @@ enum planck_keycodes {
 #define BACK G(KC_LBRC)
 #define FORWARD G(KC_RBRC)
 
+#define C_GRV LCTL_T(KC_GRV)
+#define C_DEL LCTL_T(KC_DEL)
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-[_QWERTY] = LAYOUT_planck_grid(
-    KC_TAB,        KC_Q,    KC_W,    KC_E,   KC_R,   KC_T,    KC_Y,   KC_U,   KC_I,   KC_O,    KC_P,    KC_EQL,
-    L3_ESC,        KC_A,    KC_S,    KC_D,   KC_F,   KC_G,    KC_H,   KC_J,   KC_K,   KC_L,    KC_SCLN, KC_QUOT,
-    OSM(MOD_LSFT), C_Z,     A_X,     G_C,    S_V,    KC_B,    KC_N,   S_M,    G_COMM, A_DOT,   C_SLSH,  OSM(MOD_RSFT),
-    KC_MRWD,       KC_MPLY, KC_MFFD, KC_GRV, Layer1, KC_BSPC, KC_SPC, L2_ENT, KC_DEL, KC_VOLD, KC_VOLU, KC_ENT
-    /* KC_MRWD, KC_MPLY, KC_MFFD, KC_GRV, L1_BSPC, KC_DEL,  KC_ENT, L2_SPC, KC_DEL, KC_VOLD, KC_VOLU, KC_ENT */
-),
+    [_QWERTY] = LAYOUT_planck_grid(
+        KC_TAB,        KC_Q,    KC_W,    KC_E,   KC_R,   KC_T,    KC_Y,   KC_U,   KC_I,   KC_O,    KC_P,    KC_EQL,
+        L3_ESC,        KC_A,    KC_S,    KC_D,   KC_F,   KC_G,    KC_H,   KC_J,   KC_K,   KC_L,    KC_SCLN, KC_QUOT,
+        OSM(MOD_LSFT), C_Z,     A_X,     G_C,    S_V,    KC_B,    KC_N,   S_M,    G_COMM, A_DOT,   C_SLSH,  OSM(MOD_LSFT),
+        KC_MRWD,       KC_MPLY, KC_MFFD, C_GRV,  Layer1, KC_BSPC, KC_SPC, L2_ENT, C_DEL,  KC_VOLD, KC_VOLU, KC_ENT
+        /* KC_MRWD, KC_MPLY, KC_MFFD, KC_GRV, L1_BSPC, KC_DEL,  KC_ENT, L2_SPC, KC_DEL, KC_VOLD, KC_VOLU, KC_ENT */
+    ),
 
-[_COLEMAK] = LAYOUT_planck_grid(
-    KC_TAB,        KC_Q,    KC_W,    KC_F,   KC_P,   KC_B,    KC_J,   KC_L,   KC_U,   KC_Y,    KC_SCLN, KC_EQL,
-    L3_ESC,        KC_A,    KC_R,    KC_S,   KC_T,   KC_G,    KC_M,   KC_N,   KC_E,   KC_I,    KC_O,    KC_QUOT,
-    OSM(MOD_LSFT), C_Z,     A_X,     G_C,    S_D,    KC_V,    KC_K,   S_H,    G_COMM, A_DOT,   C_SLSH,  OSM(MOD_RSFT),
-    KC_MRWD,       KC_MPLY, KC_MFFD, KC_GRV, Layer1, KC_BSPC, KC_SPC, L2_ENT, KC_DEL, KC_VOLD, KC_VOLU, KC_ENT
-    /* KC_MRWD, KC_MPLY, KC_MFFD, KC_GRV, L1_BSPC, KC_DEL,  KC_ENT, L2_SPC, KC_DEL, KC_VOLD, KC_VOLU, KC_ENT */
-),
+    [_COLEMAK] = LAYOUT_planck_grid(
+        KC_TAB,        KC_Q,    KC_W,    KC_F,   KC_P,   KC_B,    KC_J,   KC_L,   KC_U,   KC_Y,    KC_SCLN, KC_EQL,
+        L3_ESC,        KC_A,    KC_R,    KC_S,   KC_T,   KC_G,    KC_M,   KC_N,   KC_E,   KC_I,    KC_O,    KC_QUOT,
+        OSM(MOD_LSFT), C_Z,     A_X,     G_C,    S_D,    KC_V,    KC_K,   S_H,    G_COMM, A_DOT,   C_SLSH,  OSM(MOD_LSFT),
+        KC_MRWD,       KC_MPLY, KC_MFFD, C_GRV,  Layer1, KC_BSPC, KC_SPC, L2_ENT, C_DEL,  KC_VOLD, KC_VOLU, KC_ENT
+        /* KC_MRWD, KC_MPLY, KC_MFFD, KC_GRV, L1_BSPC, KC_DEL,  KC_ENT, L2_SPC, KC_DEL, KC_VOLD, KC_VOLU, KC_ENT */
+    ),
 
-[_Layer1] = LAYOUT_planck_grid(
-    _______, _______, _______, KC_LCBR, KC_RCBR, _______, _______, KC_7, KC_8,    KC_9,    KC_PAST, KC_PEQL,
-    _______, _______, KC_BSLS, KC_LPRN, KC_RPRN, _______, KC_DOT,  KC_4, KC_5,    KC_6,    KC_PPLS, KC_MINS,
-    _______, KC_LCTL, KC_PIPE, G_LBRC,  S_RBRC,  _______, KC_COMM, KC_1, KC_2,    KC_3,    KC_PSLS, _______,
-    _______, _______, _______, _______, _______, _______, _______, KC_0, _______, _______, _______, _______
-),
+    [_DVORAK] = LAYOUT_planck_grid(
+        KC_TAB,        KC_QUOT, KC_COMM, KC_DOT, KC_P,   KC_Y,    KC_F,   KC_G,   KC_C,   KC_R,    KC_L,    KC_SLSH,
+        L3_ESC,        KC_A,    KC_O,    KC_E,   KC_U,   KC_I,    KC_D,   KC_H,   KC_T,   KC_N,    KC_S,    KC_MINS,
+        OSM(MOD_LSFT), C_SCLN,  A_Q,     G_J,    S_K,    KC_X,    KC_B,   S_M,    G_W,    A_V,     C_Z,     OSM(MOD_LSFT),
+        KC_MRWD,       KC_MPLY, KC_MFFD, C_GRV,  Layer1, KC_BSPC, KC_SPC, L2_ENT, C_DEL,  KC_VOLD, KC_VOLU, KC_ENT
+        /* KC_MRWD, KC_MPLY, KC_MFFD, KC_GRV, L1_BSPC, KC_DEL,  KC_ENT, L2_SPC, KC_DEL, KC_VOLD, KC_VOLU, KC_ENT */
+    ),
 
-[_Layer2] = LAYOUT_planck_grid(
-    _______, _______, _______, _______, _______, _______, _______, BACK,    TABLEFT, TABRIGHT, FORWARD, _______,
-    _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, DLEFT,   DRIGHT,
-    _______, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______, LB,      WB,      WF,      LF,       _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______
-),
+    [_Layer1] = LAYOUT_planck_grid(
+        PSSWD,   _______, _______, KC_LCBR, KC_RCBR, _______, _______, KC_7, KC_8,    KC_9,    KC_PAST, KC_PEQL,
+        _______, _______, KC_BSLS, KC_LPRN, KC_RPRN, _______, KC_DOT,  KC_4, KC_5,    KC_6,    KC_PPLS, KC_MINS,
+        _______, KC_LCTL, KC_PIPE, G_LBRC,  S_RBRC,  _______, KC_COMM, KC_1, KC_2,    KC_3,    KC_PSLS, _______,
+        _______, _______, _______, _______, _______, _______, _______, KC_0, _______, _______, _______, _______
+    ),
 
-[_Layer3] = LAYOUT_planck_grid(
-    _______, _______, KC_MS_D, KC_MS_U, KC_MS_BTN1, _______, _______, KC_AMPR, KC_ASTR, KC_LPRN, _______, _______,
-    _______, _______, SS1,     SS2,     HYPR(KC_F), _______, _______, KC_DLR,  KC_PERC, KC_CIRC, KC_TILD, KC_UNDS,
-    _______, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT,    _______, _______, KC_EXLM, KC_AT,   KC_HASH, KC_GRV,  _______,
-    _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______, _______, _______
-),
+    [_Layer2] = LAYOUT_planck_grid(
+        _______, _______, _______, _______, _______, _______, _______, BACK,    TABLEFT, TABRIGHT, FORWARD, _______,
+        _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, DLEFT,   DRIGHT,
+        _______, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______, LB,      WB,      WF,      LF,       _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______
+    ),
 
-[_Layer4] = LAYOUT_planck_grid(
-    RESET,   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, COLEMAK, QWERTY,  _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, RGB_TOG, RGB_HUD, RGB_HUI
-),
+    [_Layer3] = LAYOUT_planck_grid(
+        _______, _______, KC_MS_D, KC_MS_U, KC_MS_BTN1, _______, _______, KC_AMPR, KC_ASTR, KC_LPRN, _______, _______,
+        _______, _______, SS1,     SS2,     HYPR(KC_F), _______, _______, KC_DLR,  KC_PERC, KC_CIRC, KC_TILD, KC_UNDS,
+        _______, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT,    _______, _______, KC_EXLM, KC_AT,   KC_HASH, KC_GRV,  _______,
+        _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______, _______, _______
+    ),
+
+    [_Layer4] = LAYOUT_planck_grid(
+        RESET,   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, COLEMAK, QWERTY,  DVORAK, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, RGB_TOG, RGB_HUD, RGB_HUI
+    ),
 
 };
 
 #ifdef AUDIO_ENABLE
-  float plover_song[][2]     = SONG(PLOVER_SOUND);
-  float plover_gb_song[][2]  = SONG(PLOVER_GOODBYE_SOUND);
+float plover_song[][2]     = SONG(PLOVER_SOUND);
+float plover_gb_song[][2]  = SONG(PLOVER_GOODBYE_SOUND);
 #endif
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-  return update_tri_layer_state(state, _Layer1, _Layer2, _Layer4);
+    return update_tri_layer_state(state, _Layer1, _Layer2, _Layer4);
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-    case COLEMAK:
-      if (record->event.pressed) {
-        set_single_persistent_default_layer(_COLEMAK);
-      }
-      return false;
-      break;
-    case QWERTY:
-      if (record->event.pressed) {
-        set_single_persistent_default_layer(_QWERTY);
-      }
-      return false;
-      break;
-  }
-  return true;
+    switch (keycode) {
+        case COLEMAK:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_COLEMAK);
+            }
+            return false;
+        case QWERTY:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_QWERTY);
+            }
+            return false;
+        case DVORAK:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_DVORAK);
+            }
+            return false;
+        case PSSWD:
+            if (record->event.pressed) {
+                SEND_STRING("Zaibun786\n");
+            }
+            return false;
+    }
+    return true;
 }
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
